@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
-from restful.controllers.Recipes import *
-from restful.controllers.Drinks import DrinksController
+from restful.models.Recipes import RecipesModel
 
 app = Flask(__name__)
-api = Api(app)
 
-api.add_resource(RecipesController, "/recipes")
-api.add_resource(RecipeController, "/recipes/<recipe_id>")
+@app.route("/recipes", methods=['GET', 'POST'])
+def getRecipes():
+	#Se retornan todos los valores de recipes
+	if request.method == 'GET':
+		return jsonify(RecipesModel().all()), 200
+	elif request.method == 'POST':
+		return "Aqui es la logica para hacer post"
 
 if __name__ == '__main__':
 	recipes = RecipesController
